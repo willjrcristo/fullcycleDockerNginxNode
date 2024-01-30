@@ -1,0 +1,23 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Desafio Full Cycle - Docker (App Node sem usar Node local)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willjrcristo/desafioDockerNodeFullCycle.git"
+  },
+  "author": "willjrcristo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willjrcristo/desafioDockerNodeFullCycle/issues"
+  },
+  "homepage": "https://github.com/willjrcristo/desafioDockerNodeFullCycle#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}

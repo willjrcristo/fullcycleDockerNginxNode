@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  express:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    image: willjrcristo/nodedocker:latest
+    container_name: express
+    networks:
+      - expressnet
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: willjrcristo/nginx:prod
+    container_name: nginx
+    networks:
+      - expressnet
+    ports:
+      - "8080:80"
+
+networks:
+  expressnet:
+    driver: bridge
