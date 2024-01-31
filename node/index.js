@@ -51,7 +51,7 @@ app.post('/add', (req, res) => {
     const { body } = req;
     const { name } = body;
     insert(name);
-    res.redirect('/', 307) 
+    res.redirect(307, '/') 
 })
 
 const root = async (req, res) =>{
