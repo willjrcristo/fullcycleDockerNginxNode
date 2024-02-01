@@ -2,12 +2,12 @@ FROM node:20.11
 
 WORKDIR /app
 
-COPY package.json /app/package.json
+# COPY package.json /app/package.json
 
-RUN npm i 
+# RUN npm i 
 
 COPY . /app
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
