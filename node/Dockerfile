@@ -1,12 +1,12 @@
 FROM node:20.11
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package.json /usr/src/app/package.json
+COPY package.json /app/package.json
 
 RUN npm i 
 
-COPY . /usr/src/app
+COPY . /app
 
 EXPOSE 3000
 

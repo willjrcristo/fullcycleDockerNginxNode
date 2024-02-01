@@ -19,10 +19,11 @@ services:
     ports:
       - "3306:3306"
     
-  dockerize:
+  dockerize_db:
     build:
       context: ./dockerize
-    container_name: dockerize
+      dockerfile: Dockerfile.db
+    container_name: dockerize_db
 
   app:
     build:
@@ -30,15 +31,21 @@ services:
     container_name: app
     networks:
       - nodenet
-    volumes:
-      - ./node:/usr/src/app
+    #volumes:
+    #  - ./node:/app
     tty: true
     ports:
       - "3001:3000"
     environment:
       - DBHOST=db
     depends_on:
-      - dockerize
+      - dockerize_db
+
+  dockerize_app:
+    build:
+      context: ./dockerize
+      dockerfile: Dockerfile.app
+    container_name: dockerize_app
 
   nginx:
     image: nginx:latest
@@ -47,7 +54,7 @@ services:
     ports:
       - '8080:80'
     depends_on:
-      - app
+      - dockerize_app
     networks:
       - nodenet
     volumes:
