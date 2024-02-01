@@ -97,6 +97,8 @@ const root = async (req, res) =>{
 app.get('/', root)
 app.post('/', root)
 
-app.listen(port, function (){
-    console.log(`Rodando na porta ${port}`)
-}) 
+setTimeout(() => {
+    app.listen(port, function (){
+        console.log(`Rodando na porta ${port}`)
+    })
+}, 30000) 
