@@ -18,12 +18,17 @@ services:
       - nodenet
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
     
-  dockerize_db:
-    build:
-      context: ./dockerize
-      dockerfile: Dockerfile.db
-    container_name: dockerize_db
+  # dockerize_db:
+  #   build:
+  #     context: ./dockerize
+  #     dockerfile: Dockerfile.db
+  #   container_name: dockerize_db
 
   app:
     build:
@@ -31,21 +36,30 @@ services:
     container_name: app
     networks:
       - nodenet
-    #volumes:
-    #  - ./node:/app
+    volumes:
+      - ./node:/app
     tty: true
     ports:
       - "3001:3000"
     environment:
       - DBHOST=db
     depends_on:
-      - dockerize_db
+      # - dockerize_db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  dockerize_app:
-    build:
-      context: ./dockerize
-      dockerfile: Dockerfile.app
-    container_name: dockerize_app
+
+  # dockerize_app:
+  #   build:
+  #     context: ./dockerize
+  #     dockerfile: Dockerfile.app
+  #   container_name: dockerize_app
 
   nginx:
     image: nginx:latest
@@ -54,7 +68,9 @@ services:
     ports:
       - '8080:80'
     depends_on:
-      - dockerize_app
+      # - dockerize_app
+      app:
+        condition: service_healthy
     networks:
       - nodenet
     volumes:
