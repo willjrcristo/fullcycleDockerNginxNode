@@ -19,6 +19,10 @@ services:
     ports:
       - "3306:3306"
     
+  dockerize:
+    build:
+      context: ./dockerize
+    container_name: dockerize
 
   app:
     build:
@@ -34,7 +38,7 @@ services:
     environment:
       - DBHOST=db
     depends_on:
-      - db
+      - dockerize
 
   nginx:
     image: nginx:latest
