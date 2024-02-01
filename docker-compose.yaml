@@ -26,13 +26,15 @@ services:
     container_name: app
     networks:
       - nodenet
-    #volumes:
-    #  - ./node:/usr/src/app
+    volumes:
+      - ./node:/usr/src/app
     tty: true
     ports:
       - "3001:3000"
     environment:
       - DBHOST=db
+    depends_on:
+      - db
 
   nginx:
     image: nginx:latest

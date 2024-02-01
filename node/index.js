@@ -17,11 +17,17 @@ const config = {
 console.log( JSON.stringify( config, null, 2 ))
 
 function getConn(){
-    const connection = mysql.createConnection(config)
+    try {
+        const connection = mysql.createConnection(config)
 
-    connection.connect()
-    
-    return connection;
+        connection.connect()
+        
+        return connection;    
+    }
+    catch (err){
+        console.error("Erro ao estabelecer comunicação com o banco de dados! \n Favor tentar novamente em alguns instantes")
+        throw err;
+    }
 }
 
 function query(sql){
@@ -73,6 +79,7 @@ const root = async (req, res) =>{
     }
     catch (erro){
         console.error(erro)
+        return res.send('Tente novamente mais tarde!')
     }
 
     response.push(`
